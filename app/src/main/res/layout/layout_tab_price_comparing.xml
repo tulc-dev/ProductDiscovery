@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        style="@style/Text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|end"
+        android:paddingEnd="12dp"
+        android:text="@string/price_comparing"
+        android:textColor="@drawable/tab_text_color"
+        android:textSize="13sp" />
+
+</layout>

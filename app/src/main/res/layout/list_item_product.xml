@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="product"
+            type="com.tulc.product.discovery.models.Product" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@color/white"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{clickListener}">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="12dp"
+                android:src="@drawable/ic_placeholder"
+                app:imageUrl="@{product.getImageUrl()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/productName"
+                style="@style/Text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="104dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:text="@{product.getDisplay()}"
+                android:transitionName="productName"
+                app:layout_constraintBottom_toTopOf="@+id/sellPrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/sellPrice"
+                style="@style/Text.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{product.getSellPrice()}"
+                android:textColor="@color/tomato"
+                app:layout_constraintBottom_toTopOf="@+id/listedPrice"
+                app:layout_constraintStart_toStartOf="@+id/productName"
+                app:layout_constraintTop_toBottomOf="@+id/productName" />
+
+            <TextView
+                android:id="@+id/currencyUnit"
+                style="@style/Text.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="@string/currency_unit"
+                android:textColor="@color/tomato"
+                android:textSize="12sp"
+                app:isGone="@{product.getSellPrice().isEmpty()}"
+                app:layout_constraintStart_toEndOf="@+id/sellPrice"
+                app:layout_constraintTop_toTopOf="@+id/sellPrice" />
+
+            <TextView
+                android:id="@+id/listedPrice"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/coolGrey"
+                android:textSize="12sp"
+                app:isGone="@{product.percentageDiscount==0}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/sellPrice"
+                app:layout_constraintTop_toBottomOf="@+id/sellPrice"
+                app:specifiesText="@{product.getListedPrice()}" />
+
+            <TextView
+                android:id="@+id/discount"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/ic_tag"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:gravity="center"
+                android:minWidth="32dp"
+                android:paddingStart="3.5dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="2.5dp"
+                android:paddingBottom="2dp"
+                android:text="@{String.format(@string/percentage_discount, product.percentageDiscount)}"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:isGone="@{product.percentageDiscount==0}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/listedPrice"
+                app:layout_constraintDimensionRatio="W 1:2"
+                app:layout_constraintStart_toEndOf="@+id/listedPrice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

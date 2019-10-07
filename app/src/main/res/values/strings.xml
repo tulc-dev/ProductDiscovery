@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Product Discovery</string>
+
+    <string name="tit_cart">Giỏ hàng (%d)</string>
+
+    <string name="msg_no_internet_connection">Không có kết nối Internet</string>
+    <string name="msg_no_data">Không tìm thấy kết quả nào</string>
+    <string name="msg_unknown_error">Có lỗi xảy ra</string>
+    <string name="msg_timeout_error">Kết nối mạng không ổn định</string>
+
+    <string name="product_search_hint">Nhập tên, mã sản phẩm</string>
+    <string name="currency_unit">đ</string>
+    <string name="retry">Thử lại</string>
+    <string name="clear">Xoá</string>
+    <string name="sold_out">Tạm hết hàng</string>
+    <string name="percentage_discount">-%d%%</string>
+    <string name="total_available">Đang còn %d sản phẩm</string>
+    <string name="product_code">Mã SP: </string>
+
+    <string name="product_description">Mô tả sản phẩm</string>
+    <string name="technical_data">Thông số kỹ thuật</string>
+    <string name="price_comparing">So sánh giá</string>
+    <string name="show_more">Hiển thị nhiều hơn</string>
+    <string name="show_less">Hiển thị ít hơn</string>
+</resources>

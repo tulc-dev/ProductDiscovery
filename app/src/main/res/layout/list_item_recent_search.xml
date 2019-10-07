@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="recentSearchListener"
+            type="com.tulc.product.discovery.adapter.RecentSearchAdapter.OnRecentSearchSelectedListener" />
+
+        <variable
+            name="recentSearch"
+            type="com.tulc.product.discovery.models.RecentSearch" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{()->recentSearchListener.onSelect(recentSearch)}">
+
+            <TextView
+                style="@style/Text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:minHeight="40dp"
+                android:paddingStart="12dp"
+                android:paddingLeft="40dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@{recentSearch.text}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_icon_button"
+                android:onClick="@{()->recentSearchListener.onDelete(recentSearch)}"
+                android:padding="12dp"
+                android:src="@drawable/ic_close_outline"
+                android:tint="@color/darkGrey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

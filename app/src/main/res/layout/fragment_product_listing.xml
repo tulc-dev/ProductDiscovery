@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.tulc.product.discovery.utils.WindowUtilKt" />
+
+        <variable
+            name="viewModel"
+            type="com.tulc.product.discovery.viewmodel.ProductListingViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.ProductListingFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_search_view"
+            android:paddingTop="@{WindowUtilKt.getStatusBarHeight(context)}"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <EditText
+                    android:id="@+id/searchEditText"
+                    style="@style/Text"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="11dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_search"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="8dp"
+                    android:hint="@string/product_search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="40dp"
+                    android:text="@={viewModel.query}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/clearSearchButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_icon_button"
+                    android:onClick="@{(v)->viewModel.onClearQuery(v)}"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_close_outline"
+                    android:tint="@color/darkGrey"
+                    app:isGone="@{viewModel.query.length() == 0}"
+                    app:layout_constraintBottom_toBottomOf="@+id/searchEditText"
+                    app:layout_constraintEnd_toEndOf="@+id/searchEditText"
+                    app:layout_constraintTop_toTopOf="@+id/searchEditText" />
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_icon_button"
+                    android:onClick="@{(v)->viewModel.onBackPress(v)}"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_arrow_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:refreshing="@{viewModel.refreshing}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/productRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/paleGrey"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_product" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recentSearchRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:isGone="@{!viewModel.typing || viewModel.recentSearches.size()==0}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+
+        <include
+            layout="@layout/layout_loading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:loading="@{viewModel.loading}" />
+
+        <include
+            layout="@layout/layout_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:noData="@{viewModel.noData}" />
+
+        <include
+            layout="@layout/layout_error"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:errorCode="@{viewModel.hasError ? viewModel.errorCode : null}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:retryClickListener="@{(v)->viewModel.onRetry(v)}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
